@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Login, Nav, TrackInfo } from "./components";
 import { getAccessToken } from "./lib/auth";
 import axios from "axios";
-import { GlobalStyle } from "./theme/styles";
+import { Container, GlobalStyle, TrackViewer, Sidebar } from "./theme/styles";
 
 function App() {
   const GlobalStyleProxy = GlobalStyle;
 
   const [token, setToken] = useState<string | null>(null);
-  const [profile, setProfile] = useState<string | undefined>(undefined);
+  const [profile, setProfile] = useState<string | null>(null);
 
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const params = new URLSearchParams(window.location.search);
@@ -52,7 +52,12 @@ function App() {
       <>
         <GlobalStyleProxy />
         <Nav profile={profile} />
-        <TrackInfo />
+        <Container>
+          <TrackViewer>
+            <TrackInfo />
+          </TrackViewer>
+          <Sidebar />
+        </Container>
       </>
     );
   }

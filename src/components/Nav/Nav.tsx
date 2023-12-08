@@ -1,8 +1,9 @@
 import { redirectToAuthCodeFlow } from "../../lib/auth";
+import { Nullable } from "../../lib/utils";
 import { H1, LoginButton, Navbar, Profile } from "./styles";
 
 type NavProps = {
-  profile?: string;
+  profile?: Nullable<string>;
 };
 
 export function Nav({ profile }: NavProps) {
