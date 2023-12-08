@@ -1,16 +1,25 @@
 import { redirectToAuthCodeFlow } from "../../lib/auth";
+import { H1, LoginButton, Navbar, Profile } from "./styles";
 
-export function Nav() {
-  const clientId = import.meta.env.VITE_CLIENT_ID;
+type NavProps = {
+  profile?: string;
+};
+
+export function Nav({ profile }: NavProps) {
+  const clientId: string = import.meta.env.VITE_CLIENT_ID;
 
   const handleLogin = async () => {
     await redirectToAuthCodeFlow(clientId);
   };
 
   return (
-    <>
-      <h1>Brut</h1>
-      <button onClick={handleLogin}>Login</button>
-    </>
+    <Navbar>
+      <H1>Brut</H1>
+      {!profile ? (
+        <LoginButton onClick={handleLogin}>Login</LoginButton>
+      ) : (
+        <Profile profile={profile}></Profile>
+      )}
+    </Navbar>
   );
 }
