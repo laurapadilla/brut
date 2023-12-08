@@ -1,8 +1,16 @@
+import { redirectToAuthCodeFlow } from "../../lib/auth";
+
 export function Nav() {
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+
+  const handleLogin = async () => {
+    await redirectToAuthCodeFlow(clientId);
+  };
+
   return (
-    <div>
+    <>
       <h1>Brut</h1>
-      <button>Login</button>
-    </div>
+      <button onClick={handleLogin}>Login</button>
+    </>
   );
 }
