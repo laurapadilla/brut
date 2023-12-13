@@ -17,12 +17,18 @@ export const H1 = styled.h1`
   font-size: 2rem;
 `;
 
+export const UserContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+
 type ProfileProps = {
-  profileSrc: string;
+  profilesrc: string;
 };
 
 export const Profile = styled.image<ProfileProps>`
-  background-image: ${(props) => `url(${props.profileSrc})`};
+  background-image: ${(props) => `url(${props.profilesrc})`};
   background-size: cover;
   border: 2px solid black;
   height: 3rem;
@@ -30,10 +36,27 @@ export const Profile = styled.image<ProfileProps>`
   filter: grayscale(1);
 `;
 
-export const LoginButton = styled.button`
+export const Button = styled.button`
   background: black;
   border: 0;
   color: white;
+  cursor: pointer;
   height: 2.5rem;
   padding: 0 2rem;
+
+  &:hover {
+    background: gray;
+    color: white;
+  }
+`;
+
+export const ButtonInverted = styled(Button)`
+  background: white;
+  color: black;
+  border: 2px solid black;
+
+  &:hover {
+    background: black;
+    color: white;
+  }
 `;

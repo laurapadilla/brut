@@ -30,7 +30,7 @@ export const TrackViewer = styled.div`
   min-width: 70vw;
 `;
 
-export const Sidebar = styled.div`
+export const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 30vw;

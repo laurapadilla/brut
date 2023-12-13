@@ -1,12 +1,20 @@
 import { redirectToAuthCodeFlow } from "../../lib/auth";
 import { Nullable } from "../../lib/utils";
-import { H1, LoginButton, Navbar, Profile } from "./styles";
+import {
+  H1,
+  Button,
+  Navbar,
+  Profile,
+  UserContainer,
+  ButtonInverted,
+} from "./styles";
 
 type NavProps = {
   profile?: Nullable<string>;
+  logout: () => void;
 };
 
-export function Nav({ profile }: NavProps) {
+export function Nav({ logout, profile }: NavProps) {
   const clientId: string = import.meta.env.VITE_CLIENT_ID;
 
   const handleLogin = async () => {
@@ -17,9 +25,12 @@ export function Nav({ profile }: NavProps) {
     <Navbar>
       <H1>Brut</H1>
       {!profile ? (
-        <LoginButton onClick={handleLogin}>Login</LoginButton>
+        <Button onClick={handleLogin}>Login</Button>
       ) : (
-        <Profile profileSrc={profile}></Profile>
+        <UserContainer>
+          <Profile profilesrc={profile}></Profile>
+          <ButtonInverted onClick={logout}>Logout</ButtonInverted>
+        </UserContainer>
       )}
     </Navbar>
   );

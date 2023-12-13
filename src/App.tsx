@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
-import { Login, Nav, TrackInfo } from "./components";
+import { Login, Nav, SideBar, TrackInfo } from "./components";
 import { getAccessToken } from "./lib/auth";
 import axios from "axios";
-import { Container, GlobalStyle, TrackViewer, Sidebar } from "./theme/styles";
+import {
+  Container,
+  GlobalStyle,
+  TrackViewer,
+  SidebarContainer,
+} from "./theme/styles";
 
 function App() {
-  const GlobalStyleProxy = GlobalStyle;
-
   const [token, setToken] = useState<string | null>(null);
   const [profile, setProfile] = useState<string | null>(null);
+  const [playlists, setPlaylists] = useState([]);
 
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const params = new URLSearchParams(window.location.search);
@@ -20,6 +24,7 @@ function App() {
     }
     if (token) {
       getUserInfo();
+      getPlaylists();
     }
   });
 
@@ -40,23 +45,49 @@ function App() {
     setProfile(data.images[0].url);
   };
 
+  const getPlaylists = async () => {
+    const { data } = await axios.get(
+      "https://api.spotify.com/v1/me/playlists",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(data);
+    const playlists = data.items.map(
+      ({ name, id }: { name: string; id: number }) => {
+        return { name, id };
+      }
+    );
+
+    setPlaylists(playlists);
+  };
+
+  function logout() {
+    return setToken("");
+  }
+
   if (!token) {
     return (
       <>
-        <GlobalStyleProxy />
+        <GlobalStyle />
         <Login />
       </>
     );
   } else {
     return (
       <>
-        <GlobalStyleProxy />
-        <Nav profile={profile} />
+        <GlobalStyle />
+        <Nav logout={logout} profile={profile} />
         <Container>
           <TrackViewer>
             <TrackInfo />
           </TrackViewer>
-          <Sidebar />
+          <SidebarContainer>
+            <SideBar playlists={playlists} />
+          </SidebarContainer>
         </Container>
       </>
     );
