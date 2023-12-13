@@ -18,11 +18,11 @@ export const H1 = styled.h1`
 `;
 
 type ProfileProps = {
-  profile: string;
+  profileSrc: string;
 };
 
 export const Profile = styled.image<ProfileProps>`
-  background-image: ${(props) => `url(${props.profile})`};
+  background-image: ${(props) => `url(${props.profileSrc})`};
   background-size: cover;
   border: 2px solid black;
   height: 3rem;

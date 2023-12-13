@@ -19,7 +19,7 @@ export function Nav({ profile }: NavProps) {
       {!profile ? (
         <LoginButton onClick={handleLogin}>Login</LoginButton>
       ) : (
-        <Profile profile={profile}></Profile>
+        <Profile profileSrc={profile}></Profile>
       )}
     </Navbar>
   );
