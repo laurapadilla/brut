@@ -10,10 +10,10 @@ import {
 } from "./theme/styles";
 
 function App() {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string>("");
   const [profile, setProfile] = useState<string | null>(null);
   const [playlists, setPlaylists] = useState([]);
-  // const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = useState<Array<string>>([]);
 
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const params = new URLSearchParams(window.location.search);
@@ -76,8 +76,10 @@ function App() {
         },
       }
     );
-    console.log("my tracks:", data);
-    // setTracks(data);
+    const uris = Object.entries(data.items).map(([, val]) => val.track.url);
+    console.log(uris);
+
+    setTracks(uris);
   }
 
   function logout() {
@@ -101,7 +103,12 @@ function App() {
             <TrackInfo />
           </TrackViewer>
           <SidebarContainer>
-            <SideBar getTracks={getTracks} playlists={playlists} />
+            <SideBar
+              getTracks={getTracks}
+              playlists={playlists}
+              token={token}
+              tracks={tracks}
+            />
           </SidebarContainer>
         </PlayerContainer>
       </>

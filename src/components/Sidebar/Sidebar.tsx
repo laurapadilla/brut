@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Select from "react-select";
+import { Controls } from "..";
 
 type SideBarProps = {
   getTracks: (id: string) => void;
   playlists: Array<string>;
+  token: string;
+  tracks: Array<string>;
 };
 
-export function SideBar({ getTracks, playlists }: SideBarProps) {
+export function SideBar({ getTracks, playlists, token, tracks }: SideBarProps) {
   const playlistStyles = {
     menuLists: (styles: any) => {
       return {
@@ -28,6 +31,7 @@ export function SideBar({ getTracks, playlists }: SideBarProps) {
   }
   return (
     <>
+      <Controls token={token} tracks={tracks} />
       <Select
         defaultValue={playlists[0]}
         getOptionLabel={(e: any) => e.name}
