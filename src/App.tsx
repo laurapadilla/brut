@@ -3,16 +3,17 @@ import { Login, Nav, SideBar, TrackInfo } from "./components";
 import { getAccessToken } from "./lib/auth";
 import axios from "axios";
 import {
-  Container,
   GlobalStyle,
   TrackViewer,
   SidebarContainer,
+  PlayerContainer,
 } from "./theme/styles";
 
 function App() {
   const [token, setToken] = useState<string | null>(null);
   const [profile, setProfile] = useState<string | null>(null);
   const [playlists, setPlaylists] = useState([]);
+  // const [tracks, setTracks] = useState([]);
 
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const params = new URLSearchParams(window.location.search);
@@ -65,6 +66,20 @@ function App() {
     setPlaylists(playlists);
   };
 
+  async function getTracks(id: string) {
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/playlists/${id}/tracks`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("my tracks:", data);
+    // setTracks(data);
+  }
+
   function logout() {
     return setToken("");
   }
@@ -81,14 +96,14 @@ function App() {
       <>
         <GlobalStyle />
         <Nav logout={logout} profile={profile} />
-        <Container>
+        <PlayerContainer>
           <TrackViewer>
             <TrackInfo />
           </TrackViewer>
           <SidebarContainer>
-            <SideBar playlists={playlists} />
+            <SideBar getTracks={getTracks} playlists={playlists} />
           </SidebarContainer>
-        </Container>
+        </PlayerContainer>
       </>
     );
   }

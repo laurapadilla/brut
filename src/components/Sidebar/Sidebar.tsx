@@ -2,10 +2,11 @@
 import Select from "react-select";
 
 type SideBarProps = {
+  getTracks: (id: string) => void;
   playlists: Array<string>;
 };
 
-export function SideBar({ playlists }: SideBarProps) {
+export function SideBar({ getTracks, playlists }: SideBarProps) {
   const playlistStyles = {
     menuLists: (styles: any) => {
       return {
@@ -17,13 +18,13 @@ export function SideBar({ playlists }: SideBarProps) {
       return {
         ...styles,
         backgroundColor: isFocused ? "#999999" : null,
-        color: "#333",
+        color: "#000",
       };
     },
   };
 
   function handleChange(e: any) {
-    console.log(e);
+    getTracks(e.id);
   }
   return (
     <>
@@ -38,7 +39,7 @@ export function SideBar({ playlists }: SideBarProps) {
           borderRadius: 0,
           colors: {
             ...theme.colors,
-            primary25: "hotpink",
+            primary25: "red",
             primary: "black",
           },
         })}

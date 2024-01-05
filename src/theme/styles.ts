@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const Container = styled.div`
+export const PlayerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   height: 100vh;

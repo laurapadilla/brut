@@ -4,11 +4,14 @@ export async function redirectToAuthCodeFlow(clientId: string) {
 
   localStorage.setItem("verifier", verifier);
 
+  const scope =
+    "user-read-private user-read-email user-modify-playback-state user-read-playback-state user-read-currently-playing user-read-recently-played user-top-read playlist-read-private user-library-read streaming";
+
   const params = new URLSearchParams();
   params.append("client_id", clientId);
   params.append("response_type", "code");
   params.append("redirect_uri", "http://localhost:5173/callback");
-  params.append("scope", "user-read-private user-read-email");
+  params.append("scope", scope);
   params.append("code_challenge_method", "S256");
   params.append("code_challenge", challenge);
 
@@ -17,7 +20,7 @@ export async function redirectToAuthCodeFlow(clientId: string) {
 
 function generateCodeVerifier(length: number) {
   let text = "";
-  let possible =
+  const possible =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (let i = 0; i < length; i++) {
